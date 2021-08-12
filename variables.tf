@@ -105,7 +105,14 @@ EOD
   default     = {}
 }
 
+variable "route_table_id" {
+  type        = string
+  description = "The ID of the default route table to assign to all 'standard' subnets."
+}
 
+
+
+/*
 variable "route_table_ids" {
   description = <<EOD
   A map of subnet name to Route table ids.
@@ -119,3 +126,4 @@ EOD
   type    = map(string)
   default = {}
 }
+*/
