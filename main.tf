@@ -103,14 +103,14 @@ locals {
   nsg_object = azurerm_network_security_group.subnet_nsg
 }
 
-
+/*
 resource "azurerm_subnet_route_table_association" "standard_subnet_route_table" {
   for_each = local.azurerm_subnets
   
   subnet_id      = each.value
   route_table_id = var.route_table_id
 }
-
+*/
 
 resource "azurerm_subnet_network_security_group_association" "nsg_vnet_association" {
   for_each = local.subnet_map
