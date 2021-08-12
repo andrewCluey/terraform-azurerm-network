@@ -105,14 +105,15 @@ EOD
   default     = {}
 }
 
+
+# Removed Route Table association. 
+# Improved functionality to be aded in future release.
+/*
 variable "route_table_id" {
   type        = string
   description = "The ID of the default route table to assign to all 'standard' subnets."
 }
 
-
-
-/*
 variable "route_table_ids" {
   description = <<EOD
   A map of subnet name to Route table ids.
