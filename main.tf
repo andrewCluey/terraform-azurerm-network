@@ -105,6 +105,14 @@ locals {
 }
 
 
+####### FEATURE IMPROVEMENT - Incorporate Route Table association into subnet input param'.
+resource "azurerm_subnet_route_table_association" "route_subnet_association" {
+  for_each       = var.route_table_ids
+  route_table_id = each.value
+  subnet_id      = local.azurerm_subnets[each.key]
+}
+
+
 resource "azurerm_subnet_network_security_group_association" "nsg_vnet_association" {
   for_each = local.subnet_map
 
