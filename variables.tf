@@ -78,18 +78,6 @@ variable "subnet_service_endpoints" {
 }
 
 
-variable "subnet_enforce_private_link_endpoint_network_policies" {
-  description = "A map of subnet name to enable/disable private link endpoint network policies on the subnet. Defaults to FALSE"
-  type        = map(bool)
-  default     = {}
-}
-
-
-variable "subnet_enforce_private_link_service_network_policies" {
-  description = "A map of subnet name to enable/disable private link service network policies on the subnet. Defaults to FALSE."
-  type        = map(bool)
-  default     = {}
-}
 
 
 variable "nsg_ids" {
@@ -127,4 +115,20 @@ EOD
   type    = map(string)
   default = {}
 }
+
+
+
+variable "subnet_enforce_private_link_endpoint_network_policies" {
+  description = "A map of subnet name to enable/disable private link endpoint network policies on the subnet. Defaults to FALSE"
+  type        = map(bool)
+  default     = {}
+}
+
+
+variable "subnet_enforce_private_link_service_network_policies" {
+  description = "A map of subnet name to enable/disable private link service network policies on the subnet. Defaults to FALSE."
+  type        = map(bool)
+  default     = {}
+}
+
 */
