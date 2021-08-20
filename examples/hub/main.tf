@@ -14,26 +14,26 @@ resource "azurerm_route_table" "rt1" {
 ### Deploy Networking Module for Testing
 
 module "vnet" {
-  source              = "../"
+  source              = "../../"
   location            = "uksouth"
   resource_group_name = azurerm_resource_group.vnet.name
   dns_servers         = ["10.10.10.53"]     # Optional. Will revert to Azure provided DNS servers if omitted. 
   
   vnet = {
     name = "Test-vNet"
-    cidr = ["10.0.0.0/16"]
+    cidr = ["10.1.0.0/16"]
   }
 
   special_subnets = {
     AzureFirewallSubnet = {
-      cidr_prefix = ["10.0.2.0/26"]
+      cidr_prefix = ["10.1.2.0/26"]
       service_endpoints = []
     }
   }
 
   subnets = {
     subnet1 = {
-      cidr_prefix = ["10.0.0.0/24"]
+      cidr_prefix = ["10.1.0.0/24"]
       nsg_name    = "Subnet1Default"       # All subnets require an NSG; not necessary to add rules.
       
       # Optional Service Delegation - See Microsoft Documentation for all available delegations.
@@ -46,7 +46,7 @@ module "vnet" {
       }
     },
     subnet2 = {
-      cidr_prefix = ["10.0.1.0/24"]
+      cidr_prefix = ["10.1.1.0/24"]
       nsg_name    = "Subnet2Default"
       rules = [
         {
@@ -76,8 +76,4 @@ module "vnet" {
 
   }
 
-  route_table_ids = {
-    subnet1 = azurerm_route_table.rt1.id
-    subnet2 = azurerm_route_table.rt1.id
-  }
 }

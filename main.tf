@@ -133,9 +133,15 @@ resource "azurerm_subnet" "special" {
 
 
 
+
+
+
+
 # Logging and Analytics to be added in future release
 ###################### Network Logging ######################
 #
 # Define diagnostic settings and network watcher services.
 #
 ###########################################################
+
+
