@@ -1,24 +1,16 @@
 ### Deploy core dependencies
-resource "azurerm_resource_group" "vnet" {
+resource "azurerm_resource_group" "rg" {
   name     = "rg-dev-network"
   location = "uksouth"
 }
-
-resource "azurerm_route_table" "rt1" {
-  name                = "ascdevrt1"
-  location            = "uksouth"
-  resource_group_name = azurerm_resource_group.vnet.name
-}
-
 
 ### Deploy Networking Module for Testing
 
 module "vnet" {
   source              = "../../"
   location            = "uksouth"
-  resource_group_name = azurerm_resource_group.vnet.name
-  dns_servers         = ["10.10.10.53"]     # Optional. Will revert to Azure provided DNS servers if omitted. 
-  
+  resource_group_name = azurerm_resource_group.rg.name
+
   vnet = {
     name = "Test-vNet"
     cidr = ["10.1.0.0/16"]
@@ -26,16 +18,16 @@ module "vnet" {
 
   special_subnets = {
     AzureFirewallSubnet = {
-      cidr_prefix = ["10.1.2.0/26"]
+      cidr_prefix       = ["10.1.2.0/26"]
       service_endpoints = []
     }
   }
 
   subnets = {
-    subnet1 = {
+    private = {
       cidr_prefix = ["10.1.0.0/24"]
-      nsg_name    = "Subnet1Default"       # All subnets require an NSG; not necessary to add rules.
-      
+      nsg_name    = "Subnet1Default" # All subnets require an NSG; not necessary to add rules.
+
       # Optional Service Delegation - See Microsoft Documentation for all available delegations.
       delegation = {
         name = "acctestdelegation1"
@@ -45,7 +37,7 @@ module "vnet" {
         }
       }
     },
-    subnet2 = {
+    public = {
       cidr_prefix = ["10.1.1.0/24"]
       nsg_name    = "Subnet2Default"
       rules = [
@@ -54,7 +46,7 @@ module "vnet" {
           priority                   = "100"
           direction                  = "Inbound"
           access                     = "Allow"
-          protocol                   = "TCP"
+          protocol                   = "Tcp"
           source_port_range          = "*"
           destination_port_range     = "443"
           source_address_prefix      = "*"
@@ -65,7 +57,7 @@ module "vnet" {
           priority                   = "400"
           direction                  = "Inbound"
           access                     = "Deny"
-          protocol                   = "TCP"
+          protocol                   = "Tcp"
           source_port_range          = "*"
           destination_port_range     = "*"
           source_address_prefix      = "*"

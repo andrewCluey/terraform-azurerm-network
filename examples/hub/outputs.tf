@@ -1,11 +1,6 @@
-output "subnet_id_map" {
-  description = "description"
-  value       = module.vnet.subnet_id_map
-}
-
-output "nsg_object" {
-  description = "description"
-  value       = module.vnet.nsg_object
+output "subnet_name_id" {
+  description = "A map of Subnet name : id"
+  value       = module.vnet.subnet_name_id
 }
 
 output "vnet_id" {

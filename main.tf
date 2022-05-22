@@ -43,7 +43,7 @@ resource "azurerm_subnet" "subnet" {
   virtual_network_name                           = azurerm_virtual_network.vnet.name
   address_prefixes                               = each.value.cidr_prefix
   service_endpoints                              = lookup(var.subnets, "service_endpoints", null)
-  enforce_private_link_endpoint_network_policies = each.value.enforce_private_link_endpoint_network_policies
+  enforce_private_link_endpoint_network_policies = lookup(var.subnets, "enforce_private_link_endpoint_network_policies", false)
   enforce_private_link_service_network_policies  = lookup(var.subnets, "subnet_enforce_private_link_service_network_policies", false)
 
   dynamic "delegation" {
@@ -63,7 +63,6 @@ resource "azurerm_subnet" "subnet" {
 
 # Subnet Network Security Group
 resource "azurerm_network_security_group" "subnet_nsg" {
-
   for_each            = var.subnets
   name                = each.value.nsg_name
   resource_group_name = var.resource_group_name
@@ -135,13 +134,9 @@ resource "azurerm_subnet" "special" {
 
 
 
-
-
 # Logging and Analytics to be added in future release
 ###################### Network Logging ######################
 #
 # Define diagnostic settings and network watcher services.
 #
 ###########################################################
-
-

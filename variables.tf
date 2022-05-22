@@ -4,12 +4,10 @@ variable "location" {
   default     = "uksouth"
 }
 
-
 variable "resource_group_name" {
   type        = string
   description = "The name of the Resource group where the new Resources will be created."
 }
-
 
 variable "vnet" {
   type = object({
@@ -18,20 +16,11 @@ variable "vnet" {
   })
 }
 
-
 variable "dns_servers" {
   type        = list(string)
   description = "A list of DNS Servers (IP ADDRESSES) that the new vNET should use."
-  default     = null
+  default     = []
 }
-
-
-variable "tags" {
-  description = "tags to apply to the new resources"
-  type        = map(string)
-  default     = null
-}
-
 
 variable "subnets" {
   description = <<EOD
@@ -55,8 +44,6 @@ variable "subnets" {
 EOD
 }
 
-
-
 variable "special_subnets" {
   description = <<EOD
   Input parameter to be used when the Subnet is for special resources such as Bastion or Azure Firewall (where an NSG is not required.)
@@ -77,8 +64,11 @@ variable "subnet_service_endpoints" {
   default     = {}
 }
 
-
-
+variable "tags" {
+  description = "tags to apply to the new resources"
+  type        = map(string)
+  default     = {}
+}
 
 variable "nsg_ids" {
   description = <<EOD
@@ -92,7 +82,6 @@ EOD
   type        = map(string)
   default     = {}
 }
-
 
 
 # Removed Route Table association. 
