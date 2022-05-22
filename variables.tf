@@ -45,6 +45,7 @@ EOD
 }
 
 variable "special_subnets" {
+  default = {}
   description = <<EOD
   Input parameter to be used when the Subnet is for special resources such as Bastion or Azure Firewall (where an NSG is not required.)
   EXAMPLE CONFIGURATION:
